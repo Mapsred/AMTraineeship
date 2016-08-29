@@ -1,11 +1,17 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+          # Our user class and the algorithm we'll use to encode passwords
+          # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+          AppBundle\Entity\User: bcrypt
+  # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        database_users:
+            entity: { class: AppBundle:User, property: username }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,6 +21,26 @@ security:
 
         main:
             anonymous: ~
+            provider: database_users
+            switch_user: true
+            switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
+            guard:
+                authenticators:
+                    - app.custom_authenticator
+#                entry_point: app.form_login_authenticator
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 1800 # 30 min in seconds
+                path:     /
+#                domain: ~
+                domain: '%domain%'
+                always_remember_me: false
+            form_login:
+                use_referer: true
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: true
             # activate different ways to authenticate
 
             # http_basic: ~
