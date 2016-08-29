@@ -7,3 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  app.doctrine_projects_listener:
+      class: AppBundle\EventListener\UploadListener
+      arguments: ["%project_directory%","%type_directory%"]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist }
+          - { name: doctrine.event_listener, event: preUpdate }
+          - { name: doctrine.event_listener, event: postLoad }
+
+
