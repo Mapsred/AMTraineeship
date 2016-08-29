@@ -43,7 +43,7 @@ twig:
     globals:
         project_directory: "%project_directory%"
         type_directory: "%type_directory%"
-        admin_skin: skin-red
+        admin_skin: "%admin_skin%"
 
     form_themes:
         - bootstrap_3_layout.html.twig

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
+            new Avanzu\AdminThemeBundle\AvanzuAdminThemeBundle(),
             //Bundles
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
