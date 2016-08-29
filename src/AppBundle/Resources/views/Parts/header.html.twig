@@ -1,0 +1,42 @@
+<div id="wrapper-header">
+    <div id="main-header" class="object">
+        <div class="logo">
+            <a href="{{ path("homepage") }}">
+                {% image '@AppBundle/Resources/public/img/logo_dark.png' %}
+                <img src="{{ asset_url }}" alt="logo" style="height:38px;">
+                {% endimage %}
+            </a>
+        </div>
+        <div id="main_tip_search">
+            <form action="{{ path("search_page") }}">
+                <label for="tip_search_input" class="sr-only"></label>
+                <input type="text" name="search" id="tip_search_input" list="search" autocomplete=off
+                       placeholder="Rechercher" required>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+
+<div id="wrapper-navbar">
+    <div class="navbar object">
+        <div id="wrapper-sorting">
+            <div id="wrapper-title-3" class="recent desc">
+                Sous portfolio d'<a href="http://www.amelie-mathieu.fr" target="_blank">Amélie Mathieu</a>
+            </div>
+        </div>
+
+        <div id="wrapper-bouton-icon">
+            {% for type in types %}
+                <div class="bouton">
+                    <a href="{{ path("type_page", {"slug": type.slug}) }}">
+                        {% set img = "uploads/types/"~ type.file  %}
+                        <img src="{{ asset(img) }}" alt="{{ type.name }}" title="{{ type.name }}">
+                    </a>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>

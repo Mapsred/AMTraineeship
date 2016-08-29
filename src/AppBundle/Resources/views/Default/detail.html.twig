@@ -1,0 +1,107 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block body_content %}
+    {% stylesheets 'bundles/app/css/details.css' output='compiled/css/detail.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    <div class="container object">
+
+        <div id="main-container-image">
+
+            <div class="title-item">
+                <div class="title-icon">
+                    {% set img = "uploads/types/"~ project.type.file %}
+                    <img src="{{ asset(img) }}" alt="{{ project.type.name }}">
+                </div>
+                <div class="title-text">{{ project.title }}</div>
+            </div>
+
+
+            <div class="work">
+                <figure class="white">
+                    {% if project.video is not empty %}
+                        <div class="embed-responsive embed-responsive-16by9 video">
+                            <iframe class="embed-responsive-item" src="{{ project.video }}" allowfullscreen=""></iframe>
+                        </div>
+                        {% set img = "uploads/projects/"~ project.images.get(0).path %}
+                        <img src="{{ asset(img) }}" alt="{{ project.title }}" style="display: none" class="image_0">
+                    {% endif %}
+                    {% for key, image in project.images %}
+                        {% if key != 0 %}
+                            {% set img = "uploads/projects/"~ image.path %}
+                            <img src="{{ asset(img) }}" alt="{{ project.title }}" style="display: none"
+                                 class="image_{{ key }}">
+                        {% endif %}
+                    {% endfor %}
+                    <div id="wrapper-part-info">
+                        <div class="part-info-image">
+                            {% if project.video is not empty %}
+                                {% if "youtube" in project.video %}
+                                    {% image '@AppBundle/Resources/public/img/youtube.png' %}
+                                    <img src="{{ asset_url }}" class="min-img" alt="video" data-img="video">
+                                    {% endimage %}
+                                {% else %}
+                                    {% image '@AppBundle/Resources/public/img/video.png' %}
+                                    <img src="{{ asset_url }}" class="min-img" alt="video" data-img="video">
+                                    {% endimage %}
+                                {% endif %}
+                                {% set img = "uploads/projects/"~ project.images.get(0).path %}
+                                <img src="{{ asset(img) }}" alt="{{ project.title }}" class="min-img"
+                                     data-img="image_0">
+                            {% endif %}
+                            {% for key, image in project.images %}
+                                {% if key != 0 %}
+                                    {% set img = "uploads/projects/"~ image.path %}
+                                    <img src="{{ asset(img) }}" alt="{{ project.title }}" class="min-img"
+                                         data-img="image_{{ key }}">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </figure>
+
+                <div class="wrapper-text-description">
+
+
+                    <div class="wrapper-file">
+                        <div class="icon-file">
+                            {% set img = "uploads/types/"~ project.type.file %}
+                            <img src="{{ asset(img) }}" alt="{{ project.type.name }}" style="width: 21px;height: 21px;">
+                        </div>
+                        <div class="text-file">{{ project.type.name }}</div>
+                    </div>
+
+                    <div class="wrapper-desc">
+                        {% image '@AppBundle/Resources/public/img/icon-desc.svg' %}
+                        <div class="icon-desc"><img src="{{ asset_url }}" alt="" width="24" height="24"/></div>
+                        {% endimage %}
+                        <div class="text-desc">{{ project.fullDescription }}</div>
+                    </div>
+                    {% if similars|length > 0 %}
+                        <div class="wrapper-morefrom">
+                            <div class="text-morefrom">Plus de{{ project.type.name }}</div>
+                            <div class="image-morefrom">
+                                {% for similar in similars %}
+                                    <a href="{{ path("detail", {'id': similar.id}) }}">
+                                        <div class="image-morefrom-1">
+                                            {% set img = "uploads/projects/"~ similar.images.get(0).path %}
+                                            <img src="{{ asset(img) }}" alt="{{ project.title }}" width="430"
+                                                 height="330">
+                                        </div>
+                                    </a>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% javascripts "@AppBundle/Resources/public/js/detail.js" output='compiled/js/detail.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

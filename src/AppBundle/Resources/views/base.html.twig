@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{% block title %}Amélie Mathieu{% endblock %}- ZoomINTV</title>
+
+    <!-- Behavioral Meta Data -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% image '@AppBundle/Resources/public/img/small-logo-01.png' %}
+    <link rel="icon" type="image/png" href="{{ asset_url }}">
+    {% endimage %}
+    {% stylesheets
+    'bundles/app/css/style.css'
+    'bundles/app/css/pagerfanta.css'
+    output='compiled/css/main.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,900,900italic,700italic,700,500italic,400italic,500,300italic,300'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+{% block body %}
+    <!-- CACHE -->
+    <div class="cache"></div>
+
+    {{ render(controller('AppBundle:Default:header')) }}
+    <!-- PORTFOLIO -->
+
+    <div id="wrapper-container">
+
+        {% block body_content %}
+
+        {% endblock %}
+
+        {{ render(controller('AppBundle:Default:footer')) }}
+    </div>
+
+{% endblock %}
+
+<!-- SCRIPT -->
+
+
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.scrollTo.min.js'
+'@AppBundle/Resources/public/js/jquery.localScroll.min.js'
+'@AppBundle/Resources/public/js/jquery-animate-css-rotate-scale.js'
+'@AppBundle/Resources/public/js/fastclick.min.js'
+'@AppBundle/Resources/public/js/jquery.animate-colors-min.js'
+'@AppBundle/Resources/public/js/jquery.animate-shadow-min.js'
+'@AppBundle/Resources/public/js/index.js'
+output='compiled/js/main.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+</body>
+
+
+</html>
+

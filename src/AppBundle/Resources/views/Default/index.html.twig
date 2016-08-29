@@ -1,0 +1,35 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block body_content %}
+    <div class="container object">
+        <div id="main-container-image">
+
+            <section class="work">
+                {% for project in projects %}
+                    <figure class="white">
+                        <a href="{{ path("detail", {'id' : project.id }) }}">
+                            {% set img = "uploads/projects/"~ project.images.get(0).path %}
+                            <img src="{{ asset(img) }}" alt="{{ project.title }}">
+                            <dl>
+                                <dt>{{ project.title }}</dt>
+                                <dd>{{ project.description }}</dd>
+                            </dl>
+                        </a>
+                        <div id="wrapper-part-info">
+                            <div class="part-info-image">
+                                {% set img = "uploads/types/"~ project.type.file %}
+                                <img src="{{ asset(img) }}" alt="{{ project.type.name }}" width="28" height="28">
+                            </div>
+                            <div id="part-info">{{ project.title }}</div>
+                        </div>
+                    </figure>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+    <div id="wrapper-oldnew">
+        {% if pager.haveToPaginate %}
+            {{ pagerfanta(pager, 'twitter_bootstrap', {'prev_message': ' ', "next_message": ' '}) }}
+        {% endif %}
+    </div>
+{% endblock %}
