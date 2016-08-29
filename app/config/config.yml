@@ -51,6 +51,9 @@ twig:
 assetic:
     filters:
         cssrewrite: ~
+    bundles:
+      - AdminBundle
+      - AppBundle
 # Doctrine Configuration
 doctrine:
     dbal:

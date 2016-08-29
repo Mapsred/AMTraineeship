@@ -1,8 +1,14 @@
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /admin
 
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    prefix:   /
+
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+

@@ -17,4 +17,7 @@ services:
   app.custom_authenticator:
       class: AdminBundle\Security\CustomAuthenticator
       arguments: ["@service_container"]
-
+  admin.menu_listener:
+        class: AdminBundle\EventListener\ListListener
+        tags:
+            - { name: kernel.event_listener, event:theme.sidebar_setup_menu, method:onSetupMenu }

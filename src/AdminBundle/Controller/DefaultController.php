@@ -14,6 +14,14 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/", name="admin_homepage")
+     * @return Response
+     */
+    public function defaultAction()
+    {
+        return $this->render("@Admin/base.html.twig");
+    }
+    /**
      * @Route("/form", name="formPage")
      * @param Request $request
      * @return Response
@@ -41,6 +49,6 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('formPage'));
         }
 
-        return $this->render('AppBundle:Default:form.html.twig', ["form" => $formView]);
+        return $this->render('AdminBundle:Default:form.html.twig', ["form" => $formView]);
     }
 }
