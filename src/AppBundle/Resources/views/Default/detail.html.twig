@@ -81,7 +81,7 @@
                     </div>
                     {% if similars|length > 0 %}
                         <div class="wrapper-morefrom">
-                            <div class="text-morefrom">Plus de{{ project.type.name }}</div>
+                            <div class="text-morefrom">Plus de {{ project.type.name }}</div>
                             <div class="image-morefrom">
                                 {% for similar in similars %}
                                     <a href="{{ path("detail", {'id': similar.id}) }}">
