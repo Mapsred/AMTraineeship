@@ -8,7 +8,7 @@
                 {% for project in projects %}
                     <figure class="white">
                         <a href="{{ path("detail", {'id' : project.id }) }}">
-                            {% set img = "uploads/projects/"~ project.images.get(0).path.filename %}
+                            {% set img = "uploads/projects/"~ project.images.get(0).file.filename %}
                             <img src="{{ asset(img) }}" alt="{{ project.title }}">
                             <dl>
                                 <dt>{{ project.title }}</dt>

@@ -61,9 +61,9 @@ class UploadListener
             $file = $entity->getFile();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $file->move($this->typePath, $fileName);
-            $entity->setFile($fileName);
-        }elseif ($entity instanceof Image && $entity->getPath() instanceof UploadedFile) {
-            $file = $entity->getPath();
+            $entity->setPath($fileName);
+        }elseif ($entity instanceof Image && $entity->getFile() instanceof UploadedFile) {
+            $file = $entity->getFile();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $file->move($this->projectPath, $fileName);
             $entity->setPath($fileName);
@@ -78,10 +78,10 @@ class UploadListener
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if ($entity instanceof Type && is_string($entity->getFile())) {
-            $entity->setFile(new File($this->typePath.'/'.$entity->getFile()));
-        }elseif ($entity instanceof Image && is_string($entity->getPath())) {
-            $entity->setPath(new File($this->projectPath.'/'.$entity->getPath()));
+        if ($entity instanceof Type) {
+            $entity->setFile(new File($this->typePath.'/'.$entity->getPath()));
+        }elseif ($entity instanceof Image) {
+            $entity->setFile(new File($this->projectPath.'/'.$entity->getPath()));
         }
     }
 }

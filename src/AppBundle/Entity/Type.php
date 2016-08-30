@@ -19,8 +19,6 @@ class Type
 
     /**
      * @var File
-     * @ORM\Column(type="string")
-     *
      * @Assert\File(
      *     maxSize = "10M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/jpg"},
@@ -29,6 +27,14 @@ class Type
      * )
      */
     protected $file;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="text", length=255, nullable=false)
+     */
+    protected $path;
+
     /**
      * @var string
      *
@@ -116,5 +122,29 @@ class Type
     public function __toString()
     {
         return (string)$this->name;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Type
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }

@@ -106,4 +106,23 @@ class Image
     {
         return $this->project;
     }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     * @return Image
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
 }

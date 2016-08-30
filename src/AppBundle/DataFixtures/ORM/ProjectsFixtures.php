@@ -43,10 +43,13 @@ class ProjectsFixtures extends AbstractFixture implements OrderedFixtureInterfac
             $type = $data['type'] - 1;
             $type = $manager->getRepository("AppBundle:Type")->findOneBy(['name' => $this->types[$type]['name']]);
             $image = new Image();
-            $image->setPath($this->getImage($data['image']));
+            $image->setFile($this->getImage($data['image']));
+            $data['description'] = self::replaceCaracters($data['description']);
+            $data['title'] = self::replaceCaracters($data['title']);
             $project->setTitle($data['title'])->setDescription($data['description'])->setType($type)->addImage($image);
             if (isset($details[$data['id']])) {
                 $detail = $details[$data['id']];
+                $detail['description'] = self::replaceCaracters($detail['description']);
                 $project->setFullDescription($detail['description']);
                 if (isset($detail['youtube'])) {
                     $project->setVideo($detail['youtube']);
@@ -54,7 +57,7 @@ class ProjectsFixtures extends AbstractFixture implements OrderedFixtureInterfac
                 for ($i = 0; $i < 4; $i++) {
                     if (isset($detail["image$i"])) {
                         $image = new Image();
-                        $image->setPath($this->getImage($detail['image1']));
+                        $image->setFile($this->getImage($detail['image1']));
                         $project->addImage($image);
                     }
                 }
@@ -85,5 +88,15 @@ class ProjectsFixtures extends AbstractFixture implements OrderedFixtureInterfac
     public function getOrder()
     {
         return 2;
+    }
+
+    private static function replaceCaracters($string)
+    {
+        $replaces = ['Ã©' => "é", 'Ã´' => "ô", "Ã§" => "ç", "Ã" => "à", "Ã¨" => "è"];
+        foreach ($replaces as $search => $replace) {
+            $string = str_replace($search, $replace, $string);
+        }
+
+        return $string;
     }
 }
