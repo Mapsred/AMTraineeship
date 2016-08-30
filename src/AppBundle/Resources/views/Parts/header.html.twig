@@ -31,7 +31,7 @@
             {% for type in types %}
                 <div class="bouton">
                     <a href="{{ path("type_page", {"slug": type.slug}) }}">
-                        {% set img = "uploads/types/"~ type.file  %}
+                        {% set img = "uploads/types/"~ type.file.filename  %}
                         <img src="{{ asset(img) }}" alt="{{ type.name }}" title="{{ type.name }}">
                     </a>
                 </div>

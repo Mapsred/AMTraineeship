@@ -11,7 +11,7 @@
 
             <div class="title-item">
                 <div class="title-icon">
-                    {% set img = "uploads/types/"~ project.type.file %}
+                    {% set img = "uploads/types/"~ project.type.file.filename %}
                     <img src="{{ asset(img) }}" alt="{{ project.type.name }}">
                 </div>
                 <div class="title-text">{{ project.title }}</div>
@@ -24,12 +24,12 @@
                         <div class="embed-responsive embed-responsive-16by9 video">
                             <iframe class="embed-responsive-item" src="{{ project.video }}" allowfullscreen=""></iframe>
                         </div>
-                        {% set img = "uploads/projects/"~ project.images.get(0).path %}
+                        {% set img = "uploads/projects/"~ project.images.get(0).path.filename %}
                         <img src="{{ asset(img) }}" alt="{{ project.title }}" style="display: none" class="image_0">
                     {% endif %}
                     {% for key, image in project.images %}
                         {% if key != 0 %}
-                            {% set img = "uploads/projects/"~ image.path %}
+                            {% set img = "uploads/projects/"~ image.path.filename %}
                             <img src="{{ asset(img) }}" alt="{{ project.title }}" style="display: none"
                                  class="image_{{ key }}">
                         {% endif %}
@@ -46,13 +46,13 @@
                                     <img src="{{ asset_url }}" class="min-img" alt="video" data-img="video">
                                     {% endimage %}
                                 {% endif %}
-                                {% set img = "uploads/projects/"~ project.images.get(0).path %}
+                                {% set img = "uploads/projects/"~ project.images.get(0).path.filename %}
                                 <img src="{{ asset(img) }}" alt="{{ project.title }}" class="min-img"
                                      data-img="image_0">
                             {% endif %}
                             {% for key, image in project.images %}
                                 {% if key != 0 %}
-                                    {% set img = "uploads/projects/"~ image.path %}
+                                    {% set img = "uploads/projects/"~ image.path.filename %}
                                     <img src="{{ asset(img) }}" alt="{{ project.title }}" class="min-img"
                                          data-img="image_{{ key }}">
                                 {% endif %}
@@ -66,7 +66,7 @@
 
                     <div class="wrapper-file">
                         <div class="icon-file">
-                            {% set img = "uploads/types/"~ project.type.file %}
+                            {% set img = "uploads/types/"~ project.type.file.filename %}
                             <img src="{{ asset(img) }}" alt="{{ project.type.name }}" style="width: 21px;height: 21px;">
                         </div>
                         <div class="text-file">{{ project.type.name }}</div>
@@ -85,7 +85,7 @@
                                 {% for similar in similars %}
                                     <a href="{{ path("detail", {'id': similar.id}) }}">
                                         <div class="image-morefrom-1">
-                                            {% set img = "uploads/projects/"~ similar.images.get(0).path %}
+                                            {% set img = "uploads/projects/"~ similar.images.get(0).path.filename %}
                                             <img src="{{ asset(img) }}" alt="{{ project.title }}" width="430"
                                                  height="330">
                                         </div>

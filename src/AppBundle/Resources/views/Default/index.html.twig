@@ -8,7 +8,7 @@
                 {% for project in projects %}
                     <figure class="white">
                         <a href="{{ path("detail", {'id' : project.id }) }}">
-                            {% set img = "uploads/projects/"~ project.images.get(0).path %}
+                            {% set img = "uploads/projects/"~ project.images.get(0).path.filename %}
                             <img src="{{ asset(img) }}" alt="{{ project.title }}">
                             <dl>
                                 <dt>{{ project.title }}</dt>
@@ -17,7 +17,7 @@
                         </a>
                         <div id="wrapper-part-info">
                             <div class="part-info-image">
-                                {% set img = "uploads/types/"~ project.type.file %}
+                                {% set img = "uploads/types/"~ project.type.file.filename %}
                                 <img src="{{ asset(img) }}" alt="{{ project.type.name }}" width="28" height="28">
                             </div>
                             <div id="part-info">{{ project.title }}</div>
