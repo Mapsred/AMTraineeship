@@ -20,9 +20,9 @@ class DefaultController extends Controller
      * @param Request $request
      * @return Response|RedirectResponse
      */
-    public function formAction(Request $request)
+    public function indexAction(Request $request)
     {
-        $projects = $this->getDoctrine()->getRepository("AppBundle:Project")->findAll();
+        $projects = $this->getDoctrine()->getRepository("AppBundle:Project")->findAllNotDeleted();
         $pagerfanta = $this->paginateProjects($projects, $request);
         if ($pagerfanta instanceof RedirectResponse) {
             return $pagerfanta;
