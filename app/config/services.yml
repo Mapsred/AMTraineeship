@@ -7,6 +7,11 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  app.custom_authenticator:
+      class: AdminBundle\Security\CustomAuthenticator
+      arguments: ["@service_container"]
+
+    #Event Listener
   app.doctrine_projects_listener:
       class: AppBundle\EventListener\UploadListener
       arguments: ["%project_directory%","%type_directory%"]
@@ -14,10 +19,14 @@ services:
           - { name: doctrine.event_listener, event: prePersist }
           - { name: doctrine.event_listener, event: preUpdate }
           - { name: doctrine.event_listener, event: postLoad }
-  app.custom_authenticator:
-      class: AdminBundle\Security\CustomAuthenticator
-      arguments: ["@service_container"]
+
   admin.menu_listener:
         class: AdminBundle\EventListener\ListListener
         tags:
             - { name: kernel.event_listener, event:theme.sidebar_setup_menu, method:onSetupMenu }
+
+  app.last_login_subscriber:
+        class: AdminBundle\EventListener\LastLoginSubscriber
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }

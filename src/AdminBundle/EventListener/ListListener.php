@@ -31,7 +31,7 @@ class ListListener
     protected function getMenu(Request $request)
     {
         $menuItems = [
-//            new MenuItemModel('dashboard', 'Dashboard', 'ad2_index', array(/* options */), 'iconclasses fa fa-tachometer'),
+            new MenuItemModel('dashboard', 'Dashboard', 'admin_homepage', [], 'iconclasses fa fa-tachometer'),
         ];
 
         return $this->activateByRoute($request->attributes->get('_route'), $menuItems);

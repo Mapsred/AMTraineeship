@@ -48,7 +48,7 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() != '/login_check') {
+        if ($request->getPathInfo() != '/admin/login_check') {
             return null;
         }
 
@@ -66,7 +66,7 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        return $this->em->getRepository('AdminBundle:User')->findByUsernameOrEmail($credentials['username']);
+        return $this->em->getRepository('AdminBundle:User')->findOneBy(['username' => $credentials['username']]);
     }
 
     /**
