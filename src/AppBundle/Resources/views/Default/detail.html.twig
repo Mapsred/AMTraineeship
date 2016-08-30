@@ -24,12 +24,16 @@
                         <div class="embed-responsive embed-responsive-16by9 video">
                             <iframe class="embed-responsive-item" src="{{ project.video }}" allowfullscreen=""></iframe>
                         </div>
-                        {% else %}
+                    {% else %}
                         {% set img = "uploads/projects/"~ project.images.get(0).file.filename %}
                         <img src="{{ asset(img) }}" alt="{{ project.title }}" class="image_0">
                     {% endif %}
                     {% for key, image in project.images %}
-                        {% if key != 0 %}
+                        {% if key == 0 and project.video is empty %}
+                            {% set img = "uploads/projects/"~ image.file.filename %}
+                            <img src="{{ asset(img) }}" alt="{{ project.title }}" style="display: none"
+                                 class="image_{{ key }}">
+                        {% else %}
                             {% set img = "uploads/projects/"~ image.file.filename %}
                             <img src="{{ asset(img) }}" alt="{{ project.title }}" style="display: none"
                                  class="image_{{ key }}">
