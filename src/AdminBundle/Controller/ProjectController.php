@@ -12,6 +12,7 @@ namespace AdminBundle\Controller;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Project;
 use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,7 @@ class ProjectController extends Controller
 {
     /**
      * @Route("/", name="admin_project_list")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return Response|RedirectResponse
      */
     public function listAction()
@@ -40,6 +42,7 @@ class ProjectController extends Controller
 
     /**
      * @Route("/new", name="admin_project_new")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return Response|RedirectResponse
      */
@@ -62,6 +65,7 @@ class ProjectController extends Controller
 
     /**
      * @Route("/edit/{id}", name="admin_project_edit")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @param Project $project
      * @return Response|RedirectResponse

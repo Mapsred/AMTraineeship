@@ -8,16 +8,13 @@
 
 namespace AdminBundle\Controller;
 
-
-use AppBundle\Entity\Image;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Type;
 use AppBundle\Form\TypeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\ProjectType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +28,7 @@ class TypeController extends Controller
 {
     /**
      * @Route("/", name="admin_type_list")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return Response|RedirectResponse
      */
     public function listAction()
@@ -45,6 +43,7 @@ class TypeController extends Controller
 
     /**
      * @Route("/new", name="admin_type_new")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return Response|RedirectResponse
      */
@@ -68,6 +67,7 @@ class TypeController extends Controller
 
     /**
      * @Route("/edit/{id}", name="admin_type_edit")
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @param Type $type
      * @return Response|RedirectResponse

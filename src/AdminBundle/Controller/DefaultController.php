@@ -4,6 +4,7 @@ namespace AdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,6 +29,7 @@ class DefaultController extends Controller
     /**
      * @Route("/ajax/delete", name="admin_delete", options={"expose": "true"})
      * @Method({"POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      * @param Request $request
      * @return JsonResponse
      */
