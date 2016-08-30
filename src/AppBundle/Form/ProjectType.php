@@ -16,7 +16,6 @@ class ProjectType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $imgParams = ['label' => 'Image', 'required' => $options['img_req'], 'label_attr' => ['class' => 'hidden']];
         $builder
             ->add('title')
             ->add('description')

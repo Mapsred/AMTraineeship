@@ -7,6 +7,7 @@ use AppBundle\Entity\Project;
 use AppBundle\Form\ProjectType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,10 +16,13 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="admin_homepage")
-     * @return Response
+     * @return Response|RedirectResponse
      */
     public function defaultAction()
     {
+        if (!$this->getUser() || !$this->getUser()->hasRole('ROLE_ADMIN')) {
+            return $this->redirectToRoute("security_login");
+        }
         return $this->render("@Admin/base.html.twig");
     }
     /**
@@ -50,5 +54,15 @@ class DefaultController extends Controller
         }
 
         return $this->render('AdminBundle:Default:form.html.twig', ["form" => $formView]);
+    }
+
+    /**
+     * @Route("/ajax/delete", name="admin_delete", options={"expose": "true"})
+     * @param Request $request
+     * @return Response|RedirectResponse
+     */
+    public function deleteObjectAction(Request $request)
+    {
+
     }
 }
