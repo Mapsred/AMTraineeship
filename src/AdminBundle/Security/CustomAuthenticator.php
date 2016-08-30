@@ -53,9 +53,8 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
         }
 
         $username = ucfirst(trim($request->request->get('_username')));
-        $password = $request->request->get('_password');
 
-        return ['username' => $username, 'password' => $password];
+        return ['username' => $username, 'password' => $request->request->get('_password')];
     }
 
     /**
@@ -66,7 +65,7 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        return $this->em->getRepository('AdminBundle:User')->findOneBy(['username' => $credentials['username']]);
+        return $userProvider->loadUserByUsername($credentials['username']);
     }
 
     /**
@@ -83,6 +82,9 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
         if (!$user instanceof User) {
             throw new CustomUserMessageAuthenticationException("Invalid credentials");
         }
+        if (!$user->hasRole('ROLE_ADMIN')) {
+            throw new CustomUserMessageAuthenticationException("User is not admin");
+        }
 
         return $encoder->isPasswordValid($user, $credentials['password']);
     }
@@ -95,7 +97,7 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return null;
+        return new RedirectResponse($this->container->get('router')->generate('admin_homepage'));
     }
 
     /**
@@ -126,7 +128,7 @@ class CustomAuthenticator extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        return false;
+        return true;
     }
 
 
