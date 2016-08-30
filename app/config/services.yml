@@ -11,6 +11,10 @@ services:
       class: AdminBundle\Security\CustomAuthenticator
       arguments: ["@service_container"]
 
+  admin.manager:
+      class: AdminBundle\Utils\ManagerService
+      arguments: ['@doctrine.orm.entity_manager', '@security.authorization_checker']
+
     #Event Listener
   app.doctrine_projects_listener:
       class: AppBundle\EventListener\UploadListener

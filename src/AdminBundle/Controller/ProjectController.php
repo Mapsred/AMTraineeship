@@ -88,7 +88,7 @@ class ProjectController extends Controller
      * @param Form $form
      * @return Project
      */
-    public function manageImages(Project $project, Form $form)
+    private function manageImages(Project $project, Form $form)
     {
         for ($i = 0; $i < 4; $i++) {
             /** @var Image $image */
