@@ -16,7 +16,7 @@ class ImageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('path', FileType::class, ['label_attr' => ['class' => 'hidden']]);
+        $builder->add('file', FileType::class, ['label_attr' => ['class' => 'hidden']]);
     }
 
     /**

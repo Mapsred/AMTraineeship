@@ -95,21 +95,18 @@ class ProjectController extends Controller
      */
     private function manageImages(Project $project, Form $form)
     {
+        $images = $project->getImages();
         for ($i = 0; $i < 4; $i++) {
             /** @var Image $image */
             $image = $form->get("image_$i")->getData();
-            if ($image && $image->getPath()) {
-                $images = $project->getImages();
-                if (!$images instanceof ArrayCollection) {
-                    $images = new ArrayCollection($images);
-                }
+            if ($image && $image->getFile()) {
                 if (!empty($images->get($i))) {
                     $this->getDoctrine()->getManager()->remove($images->get($i));
                 }
                 $images->set($i, $image);
-                $project->setImages($images);
             }
         }
+        $project->setImages($images);
 
         return $project;
     }

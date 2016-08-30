@@ -142,7 +142,7 @@ class Project
      */
     public function setImages($images)
     {
-        $this->images = [];
+        $this->images = new ArrayCollection();
         /** @var Image $image */
         foreach ($images as $image) {
             $this->addImage($image);
