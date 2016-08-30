@@ -1,0 +1,53 @@
+{% extends 'AdminBundle::base.html.twig' %}
+{% block page_title %}
+  {{ project is defined ? "Projet : #{project.title}" : "Nouveau projet" }}
+{% endblock %}
+{% block page_subtitle %}
+  {{ project is defined ? "Edition de projet" : "Nouveau projet" }}
+{% endblock %}
+
+{% block page_content %}
+
+  <div class="box">
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="col-md-8">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+      </div>
+      <div class="col-md-4">
+        {% if project is defined %}
+          {% for key, image in project.images %}
+            <div class="col-md-6">
+              <p class="text-center">Image {{ key }}</p>
+              {% set img = "uploads/projects/"~ image.path %}
+              <a href="#" data-featherlight-close-on-click="anywhere" data-featherlight="{{ asset(img) }}">
+                <img src="{{ asset(img) }}" class="img-thumbnail">
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts_inline %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.5.0/featherlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.5.0/featherlight.min.css">
+
+  <script>
+    $(document).ready(function () {
+      $('#project_type').select2();
+    })
+  </script>
+
+{% endblock %}
+

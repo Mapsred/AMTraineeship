@@ -9,8 +9,10 @@
 namespace AdminBundle\Controller;
 
 
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Project;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ProjectType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -36,6 +38,28 @@ class ProjectController extends Controller
     }
 
     /**
+     * @Route("/new", name="admin_project_new")
+     * @param Request $request
+     * @return Response|RedirectResponse
+     */
+    public function newAction(Request $request)
+    {
+        $form = $this->createForm(ProjectType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $project = $this->manageImages($form->getData(), $form);
+            $this->getDoctrine()->getManager()->persist($project);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash("success", sprintf('Projet %s créé', $project->getTitle()));
+
+            return $this->redirectToRoute("admin_project_list");
+        }
+
+        return $this->render('AdminBundle:Project:create.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
      * @Route("/edit/{id}", name="admin_project_edit")
      * @param Request $request
      * @param Project $project
@@ -43,17 +67,41 @@ class ProjectController extends Controller
      */
     public function editAction(Request $request, Project $project)
     {
+        $form = $this->createForm(ProjectType::class, $project, ['img_req' => false]);
+        $form->handleRequest($request);
+        $params = ['form' => $form->createView(), 'project' => $project];
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $project = $this->manageImages($form->getData(), $form);
+            $this->getDoctrine()->getManager()->persist($project);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash("success", sprintf('Projet %s modifié', $project->getTitle()));
+
+            return $this->redirectToRoute("admin_project_list");
+        }
+
+        return $this->render('AdminBundle:Project:create.html.twig', $params);
     }
 
     /**
-     * @Route("/new", name="admin_project_new")
-     * @param Request $request
-     * @return Response|RedirectResponse
+     * @param Project $project
+     * @param Form $form
+     * @return Project
      */
-    public function newAction(Request $request)
+    public function manageImages(Project $project, Form $form)
     {
+        for ($i = 0; $i < 4; $i++) {
+            /** @var Image $image */
+            $image = $form->get("image_$i")->getData();
+            if ($image && $image->getPath()) {
+                $images = $project->getImages();
+                $this->getDoctrine()->getManager()->remove($images->get($i));
+                $images->set($i, $image);
+                $project->setImages($images);
+            }
+        }
 
+        return $project;
     }
 
 }
