@@ -19,3 +19,5 @@
 /web/compiled/
 /web/images/
 *~
+/web/assetic/
+/web/css/
