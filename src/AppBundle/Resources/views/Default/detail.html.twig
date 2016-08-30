@@ -77,7 +77,7 @@
                         {% image '@AppBundle/Resources/public/img/icon-desc.svg' %}
                         <div class="icon-desc"><img src="{{ asset_url }}" alt="" width="24" height="24"/></div>
                         {% endimage %}
-                        <div class="text-desc">{{ project.fullDescription }}</div>
+                        <div class="text-desc">{{ project.fullDescription|nl2br() }}</div>
                     </div>
                     {% if similars|length > 0 %}
                         <div class="wrapper-morefrom">
