@@ -89,7 +89,7 @@ class Type
     /**
      * Get file
      *
-     * @return string
+     * @return string|File
      */
     public function getFile()
     {

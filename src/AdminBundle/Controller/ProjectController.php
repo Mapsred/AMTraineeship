@@ -11,6 +11,7 @@ namespace AdminBundle\Controller;
 
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Project;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,7 +96,12 @@ class ProjectController extends Controller
             $image = $form->get("image_$i")->getData();
             if ($image && $image->getPath()) {
                 $images = $project->getImages();
-                $this->getDoctrine()->getManager()->remove($images->get($i));
+                if (!$images instanceof ArrayCollection) {
+                    $images = new ArrayCollection($images);
+                }
+                if (!empty($images->get($i))) {
+                    $this->getDoctrine()->getManager()->remove($images->get($i));
+                }
                 $images->set($i, $image);
                 $project->setImages($images);
             }

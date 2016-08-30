@@ -33,6 +33,7 @@ class ListListener
         $menuItems = [
             new MenuItemModel('dashboard', 'Dashboard', 'admin_homepage', [], 'iconclasses fa fa-tachometer'),
             new MenuItemModel('projects', 'Projets', 'admin_project_list', [], 'iconclasses fa fa-cube'),
+            new MenuItemModel('types', 'Types', 'admin_type_list', [], 'iconclasses fa fa-cube'),
         ];
 
         return $this->activateByRoute($request->attributes->get('_route'), $menuItems);

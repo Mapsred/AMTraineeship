@@ -1,9 +1,9 @@
 {% extends 'AdminBundle::base.html.twig' %}
 {% block page_title %}
-  {{ project is defined ? "Projet : #{project.title}" : "Nouveau projet" }}
+  {{ type is defined ? "Type : #{type.name}" : "Nouveau type" }}
 {% endblock %}
 {% block page_subtitle %}
-  {{ project is defined ? "Edition de projet" : "Nouveau projet" }}
+  {{ type is defined ? "Edition de type" : "Nouveau type" }}
 {% endblock %}
 
 {% block page_content %}
@@ -16,21 +16,18 @@
         {{ form_end(form) }}
       </div>
       <div class="col-md-4">
-        {% if project is defined %}
-          {% for key, image in project.images %}
-            <div class="col-md-6">
-              <p class="text-center">Image {{ key }}</p>
-              {% set img = "uploads/projects/"~ image.path.filename %}
-              <a href="#" data-featherlight-close-on-click="anywhere" data-featherlight="{{ asset(img) }}">
-                <img src="{{ asset(img) }}" class="img-thumbnail">
-              </a>
-            </div>
-          {% endfor %}
+        {% if type is defined %}
+          <div class="col-md-6">
+            <p class="text-center">Image</p>
+            {% set img = "uploads/types/"~ type.file.filename %}
+            <a href="#" data-featherlight-close-on-click="anywhere" data-featherlight="{{ asset(img) }}">
+              <img src="{{ asset(img) }}" class="img-thumbnail">
+            </a>
+          </div>
         {% endif %}
       </div>
     </div>
   </div>
-
 
 {% endblock %}
 
@@ -40,12 +37,5 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.5.0/featherlight.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.5.0/featherlight.min.css">
-
-  <script>
-    $(document).ready(function () {
-      $('#project_type').select2();
-    })
-  </script>
-
 {% endblock %}
 

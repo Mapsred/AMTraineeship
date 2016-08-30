@@ -65,7 +65,16 @@ class ManagerService
                 $message = sprintf('Projet %s supprimé', $project->getTitle());
                 $this->addFlash("success", $message);
                 break;
+            case "type":
+                $type = $this->em->getRepository("AppBundle:Type")->findOneBy(['id' => $id]);
+                if (!$type) {
+                    return [['message' => 'Type not found'], 404];
+                }
 
+                $this->em->remove($type);
+                $message = sprintf('Type %s supprimé', $type->getName());
+                $this->addFlash("success", $message);
+                break;
             default:
                 return [['message' => 'Parameter type invalid.'], 401];
                 break;

@@ -26,7 +26,7 @@ class ProjectType extends AbstractType
             ->add('image_1', ImageType::class, ['mapped' => false, 'required' => false])
             ->add('image_2', ImageType::class, ['mapped' => false, 'required' => false])
             ->add('image_3', ImageType::class, ['mapped' => false, 'required' => false])
-            ->add("save", SubmitType::class);
+            ->add("save", SubmitType::class,['label' => 'Sauvegarder le projet']);
     }
 
     /**

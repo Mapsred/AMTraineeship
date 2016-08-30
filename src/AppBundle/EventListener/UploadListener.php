@@ -78,10 +78,10 @@ class UploadListener
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if ($entity instanceof Type && $entity->getFile() instanceof UploadedFile) {
+        if ($entity instanceof Type && is_string($entity->getFile())) {
             $entity->setFile(new File($this->typePath.'/'.$entity->getFile()));
-        }elseif ($entity instanceof Image && $entity->getPath() instanceof UploadedFile) {
-            $entity->setFile(new File($this->projectPath.'/'.$entity->getPath()));
+        }elseif ($entity instanceof Image && is_string($entity->getPath())) {
+            $entity->setPath(new File($this->projectPath.'/'.$entity->getPath()));
         }
     }
 }

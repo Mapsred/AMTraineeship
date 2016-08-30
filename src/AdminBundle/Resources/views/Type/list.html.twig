@@ -1,0 +1,61 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block page_title %}Types{% endblock %}
+{% block page_subtitle %}Liste des types{% endblock %}
+
+{% block page_content %}
+
+  <div class="box">
+    {% for type, messages in app.session.flashbag.all() %}
+      {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endfor %}
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-bordered">
+        <tbody>
+        <tr>
+          <th>Nom</th>
+          <th>Actions</th>
+        </tr>
+
+        {% for key, type in types %}
+          <tr>
+            <td>{{ type.name }}</td>
+            <td>
+              <a href="{{ path('admin_type_edit', {'id': type.id}) }}" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>
+              </a>
+              {% if count[key] <= 0 %}
+                <button class="btn btn-danger" data-id="{{ type.id }}" data-type="type">
+                  <i class="fa fa-trash"></i>
+                </button>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+    <div class="box-footer">
+      <a href="{{ path('admin_type_new') }}" class="btn btn-info">
+        <i class="fa fa-plus"></i> Ajouter un nouveau type
+      </a>
+    </div>
+  </div>
+
+{% endblock %}
+
+  {% block javascripts_inline %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+    {% javascripts '@AdminBundle/Resources/public/js/manager.js' output='compiled/js/manager.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+  {% endblock %}

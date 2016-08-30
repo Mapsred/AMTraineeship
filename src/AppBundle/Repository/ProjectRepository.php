@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Project;
+use AppBundle\Entity\Type;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -57,6 +58,15 @@ class ProjectRepository extends EntityRepository
             ->andWhere("q.deletedAt IS NULL")
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Type $type
+     * @return int
+     */
+    public function countByType(Type $type)
+    {
+        return count($this->findBy(['type' => $type]));
     }
 
 
