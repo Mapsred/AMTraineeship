@@ -2,6 +2,13 @@
 
 {% block body_content %}
     <div class="container object">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div id="main-container-image">
 
             <section class="work">

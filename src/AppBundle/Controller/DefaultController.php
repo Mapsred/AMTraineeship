@@ -81,7 +81,8 @@ class DefaultController extends Controller
      */
     public function typeAction(Request $request, Type $type)
     {
-        $projects = $this->getDoctrine()->getRepository("AppBundle:Project")->findBy(['type' => $type]);
+        $projects = $this->getDoctrine()->getRepository("AppBundle:Project")
+            ->findBy(['type' => $type, 'deletedAt' => null]);
         $pagerfanta = $this->paginateProjects($projects, $request);
         if ($pagerfanta instanceof RedirectResponse) {
             return $pagerfanta;
@@ -98,6 +99,11 @@ class DefaultController extends Controller
      */
     public function detailAction(Project $project)
     {
+        if ($project->isDeleted()) {
+            $this->addFlash("danger", "Ce projet n'existe pas");
+
+            return $this->redirectToRoute("homepage");
+        }
         $similars = $this->getDoctrine()->getRepository("AppBundle:Project")->findBySimilarType($project);
 
         return $this->render("AppBundle:Default:detail.html.twig", ["project" => $project, "similars" => $similars]);
