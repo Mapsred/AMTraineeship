@@ -15,4 +15,7 @@ parameters:
     secret:             ThisTokenIsNotSoSecretChangeIt
     domain: zoomintv.amelie-mathieu.fr
     admin_skin: skin_red
+    site_name: model
+    description: >
+        Description du stage
 

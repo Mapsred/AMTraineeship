@@ -44,6 +44,8 @@ twig:
         project_directory: "%project_directory%"
         type_directory: "%type_directory%"
         admin_skin: "%admin_skin%"
+        site_name: "%site_name%"
+        description: "%description%"
 
     form_themes:
         - bootstrap_3_layout.html.twig
