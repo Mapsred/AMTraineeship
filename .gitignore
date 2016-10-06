@@ -21,3 +21,5 @@
 *~
 /web/assetic/
 /web/css/
+/src/AppBundle/Resources/public/img/logo.png
+/web/favicon.ico
